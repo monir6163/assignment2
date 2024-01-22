@@ -1,19 +1,22 @@
 /*
- => Creating API for single student registration. (POST) (done)
- => Creating API to delete a single student. (DELETE) (done)
- => API needs to be created to update student information. (PUT) (done)
+ => Creating API for single addStudent registration. (POST) (done)
+ => Creating API to delete a single addStudent. (DELETE) (done)
+ => API needs to be created to update addStudent information. (PUT) (done)
  => API should be created to get all students together. (GET) (done)
 */
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/libs/Prisma";
+import StudentDataValidate from "@/utility/StudentValidation";
 import { NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 // get all users
 export async function GET(req, res) {
   try {
-    const result = await prisma.user.findMany();
+    const result = await prisma.user.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
     return NextResponse.json(
       {
         status: "success",
@@ -34,6 +37,13 @@ export async function GET(req, res) {
 export async function POST(req, res) {
   try {
     const reqBody = await req.json();
+    let errors = await StudentDataValidate(reqBody);
+    if (errors) {
+      return NextResponse.json(
+        { status: "fail", message: errors },
+        { status: 400 }
+      );
+    }
     const result = await prisma.user.create({
       data: reqBody,
     });
@@ -52,7 +62,9 @@ export async function POST(req, res) {
 // update a single user
 export async function PUT(req, res) {
   try {
-    const reqBody = await req.json();
+    let reqBody = await req.json();
+    reqBody["age"] = parseInt(reqBody["age"]);
+
     const { searchParams } = new URL(req.nextUrl);
     const id = Number(searchParams.get("id"));
 
