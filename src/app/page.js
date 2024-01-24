@@ -16,7 +16,7 @@ async function getStudentData() {
     });
     return res;
   } catch (e) {
-    console.log("e");
+    console.log("e", e);
   }
 }
 export default async function Home() {
