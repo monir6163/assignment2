@@ -1,16 +1,24 @@
 export const revalidate = 0;
+
+import StudentList from "@/components/StudentLists/StudentList";
+import prisma from "@/libs/Prisma";
 async function getStudentData() {
   try {
-    const res = await fetch(`${process.env.VERCEL_URL}api/v1/user`, {
-      cache: "no-store",
+    // const res = await fetch(`${process.env.VERCEL_URL}api/v1/user`, {
+    //   cache: "no-store",
+    // });
+    // const data = await res.json();
+    // return data["data"];
+    const res = await prisma.User.findMany({
+      orderBy: {
+        id: "desc",
+      },
     });
-    const data = await res.json();
-    return data["data"];
+    return res;
   } catch (e) {
     console.log("e");
   }
 }
-import StudentList from "@/components/StudentLists/StudentList";
 export default async function Home() {
   const studentsData = await getStudentData();
   return (
