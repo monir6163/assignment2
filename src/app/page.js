@@ -7,7 +7,7 @@ async function getStudentData() {
     const data = await res.json();
     return data["data"];
   } catch (e) {
-    console.log(e);
+    console.log("e");
   }
 }
 import StudentList from "@/components/StudentLists/StudentList";
