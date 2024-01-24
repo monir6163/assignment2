@@ -1,19 +1,8 @@
 import DeleteBtn from "@/utility/DeleteBtn";
 import Link from "next/link";
-async function getStudentData() {
-  try {
-    const res = await fetch("http://localhost:3000/api/v1/user", {
-      cache: "no-store",
-    });
-    const data = await res.json();
-    return data["data"];
-  } catch (e) {
-    console.log(e);
-  }
-}
 
-const StudentList = async () => {
-  const studentsData = await getStudentData();
+const StudentList = (props) => {
+  const studentsData = props.studentsData;
   return (
     <div className="relative overflow-x-auto py-10">
       <h1 className="text-center font-bold text-xl mb-4">

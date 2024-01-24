@@ -1,10 +1,13 @@
 "use client";
 
 import Loader from "@/utility/Loader";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const AddStudent = () => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const addStudent = async (e) => {

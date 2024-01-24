@@ -1,12 +1,7 @@
-
-
 import AddStudent from "@/components/StudentsForm/AddStudent";
 
 const Page = () => {
-
-  return (
-    <AddStudent />
-  );
+  return <AddStudent />;
 };
 
 export default Page;
