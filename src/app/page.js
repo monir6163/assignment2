@@ -1,6 +1,8 @@
+import StudentList from "@/components/StudentLists/StudentList";
+import { unstable_cache } from "next/cache";
 async function getStudentData() {
   try {
-    const res = await fetch("/api/v1/user", {
+    const res = await fetch(`${process.env.VERCEL_URL}/user`, {
       cache: "no-store",
     });
     const data = await res.json();
@@ -9,10 +11,8 @@ async function getStudentData() {
     console.log("e");
   }
 }
-import StudentList from "@/components/StudentLists/StudentList";
-import { unstable_cache } from "next/cache";
 export default async function Home() {
-  unstable_cache("home", { revalidate: 1 });
+  unstable_cache(getStudentData);
   const studentsData = await getStudentData();
   return (
     <main className="flex min-h-screen flex-col px-2">
