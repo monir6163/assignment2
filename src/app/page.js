@@ -1,4 +1,3 @@
-export const revalidate = 0;
 async function getStudentData() {
   try {
     const res = await fetch(`${process.env.VERCEL_URL}/api/v1/user`, {
@@ -11,7 +10,9 @@ async function getStudentData() {
   }
 }
 import StudentList from "@/components/StudentLists/StudentList";
+import { unstable_cache } from "next/cache";
 export default async function Home() {
+  unstable_cache("home", { revalidate: 1 });
   const studentsData = await getStudentData();
   return (
     <main className="flex min-h-screen flex-col px-2">
