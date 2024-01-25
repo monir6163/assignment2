@@ -1,6 +1,6 @@
 async function getStudentData() {
   try {
-    const res = await fetch(`${process.env.VERCEL_URL}/user`, {
+    const res = await fetch("/api/v1/user", {
       cache: "no-store",
     });
     const data = await res.json();
