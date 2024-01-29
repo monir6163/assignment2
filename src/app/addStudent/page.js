@@ -1,7 +1,7 @@
-import AddStudent from "@/components/StudentsForm/AddStudent";
+import AddTodo from "@/components/StudentsForm/AddTodo";
 
 const Page = () => {
-  return <AddStudent />;
+  return <AddTodo />;
 };
 
 export default Page;

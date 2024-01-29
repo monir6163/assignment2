@@ -1,15 +1,18 @@
 async function getStudentData() {
   try {
-    const res = await fetch(`${process.env.VERCEL_URL}/api/v1/user`, {
-      cache: "no-store",
+    const data = await prisma.User.findMany({
+      orderBy: {
+        id: "desc",
+      },
     });
-    const data = await res.json();
-    return data["data"];
+
+    return data;
   } catch (e) {
     console.log("e");
   }
 }
 import StudentList from "@/components/StudentLists/StudentList";
+import prisma from "@/libs/Prisma";
 export default async function Home() {
   const studentsData = await getStudentData();
   return (
